@@ -5,14 +5,15 @@ const T={0:[0,0,0],1:[1,0,1],2:[4,0,1],3:[0,1,0],4:[0,1,2],5:[0,2,2],6:[0,2,3],7
 function run(p,q){
 const D=new Int32Array(256),C=new Int32Array(64),M=new Int32Array(256),o=[];
 let s=0,c=0,ip=0,pc=0,st=0;
+const n=p.length;
 const done=e=>({exit:e,out:Uint8Array.from(o)});
 for(;;){
 if(st===1e6)return done(10);
-if(pc<0||pc>=p.length)return done(9);
+if(pc<0||pc>=n)return done(9);
 const b=p[pc],t=T[b];
 if(!t)return done(5);
 const[im,po,pu]=t;
-if(pc+im>=p.length)return done(9);
+if(pc+im>=n)return done(9);
 st++;
 const nx=pc+1+im;
 if(s<po)return done(2);
@@ -69,7 +70,7 @@ case 83:return done(D[--s]&255);
 }
 for(const id of readdirSync(I).sort()){
 try{
-const r=run(new Uint8Array(readFileSync(join(I,id,'program.bin'))),new Uint8Array(readFileSync(join(I,id,'input.bin'))));
+const r=run(readFileSync(join(I,id,'program.bin')),readFileSync(join(I,id,'input.bin')));
 mkdirSync(join(O,id),{recursive:true});
 writeFileSync(join(O,id,'stdout.bin'),r.out);
 writeFileSync(join(O,id,'exit.txt'),r.exit+'\n');
